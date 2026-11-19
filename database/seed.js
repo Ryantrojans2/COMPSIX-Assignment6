@@ -2,7 +2,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-// Connect to the university database
 const dbPath = path.join(__dirname, 'university.db');
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
@@ -12,7 +11,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
     }
 });
 
-// Insert the eight required courses
 const courses = [
     ['CS101', 'Intro Programming', 3, 'Learn Python basics', 'Fall 2024'],
     ['BIO120', 'General Biology', 3, 'Introduction to biological principles', 'Fall 2024'],
@@ -43,7 +41,6 @@ db.serialize(() => {
     insert.finalize();
 });
 
-// Close the database connection
 db.close((err) => {
     if (err) {
         console.error('Error closing database:', err.message);

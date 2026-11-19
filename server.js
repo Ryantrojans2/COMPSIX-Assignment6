@@ -6,10 +6,8 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// Middleware to read JSON request bodies
 app.use(express.json());
 
-// Connect to the university database
 const dbPath = path.join(__dirname, 'database', 'university.db');
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
@@ -19,7 +17,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
     }
 });
 
-// GET all courses
 app.get('/api/courses', (req, res) => {
     const sql = 'SELECT * FROM courses';
 
@@ -32,7 +29,6 @@ app.get('/api/courses', (req, res) => {
     });
 });
 
-// GET one course by ID
 app.get('/api/courses/:id', (req, res) => {
     const sql = 'SELECT * FROM courses WHERE id = ?';
 
@@ -49,7 +45,6 @@ app.get('/api/courses/:id', (req, res) => {
     });
 });
 
-// POST a new course
 app.post('/api/courses', (req, res) => {
     const { courseCode, title, credits, description, semester } = req.body;
 
@@ -82,7 +77,6 @@ app.post('/api/courses', (req, res) => {
     });
 });
 
-// PUT update an existing course
 app.put('/api/courses/:id', (req, res) => {
     const { courseCode, title, credits, description, semester } = req.body;
 
@@ -120,7 +114,6 @@ app.put('/api/courses/:id', (req, res) => {
     });
 });
 
-// DELETE a course
 app.delete('/api/courses/:id', (req, res) => {
     const sql = 'DELETE FROM courses WHERE id = ?';
 
@@ -139,12 +132,10 @@ app.delete('/api/courses/:id', (req, res) => {
     });
 });
 
-// Handle unknown routes
 app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
 
-// Start the server
 if (require.main === module) {
     app.listen(PORT, () => {
         console.log(`University Course API running at http://localhost:${PORT}`);

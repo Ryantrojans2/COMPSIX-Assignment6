@@ -2,7 +2,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-// Create the university database
 const dbPath = path.join(__dirname, 'university.db');
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
@@ -12,7 +11,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
     }
 });
 
-// Create the courses table
 db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS courses (
@@ -32,7 +30,6 @@ db.serialize(() => {
     });
 });
 
-// Close the database connection
 db.close((err) => {
     if (err) {
         console.error('Error closing database:', err.message);
